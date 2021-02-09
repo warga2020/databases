@@ -1,0 +1,52 @@
+# на данный момент у нас есть дамп БД `example`
+viktor@viktor-VirtualBox:~$ ls
+Desktop  Documents  Downloads  example_users_dump.sql  Music  Pictures  Public  Templates  Videos
+
+# смотрим какие БД у нас есть
+viktor@viktor-VirtualBox:~$ mysql -e "SHOW DATABASES;"
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+
+# выполняем через утилиту `mysql` комманду на создание новой БД `sample`.
+# этой же утилитый выполняем скрипт дампа для новой БД.
+viktor@viktor-VirtualBox:~$ mysql -e "CREATE DATABASE sample;" && mysql sample < example_users_dump.sql 
+#
+viktor@viktor-VirtualBox:~$ mysql -e "SHOW DATABASES;"
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sample             |
+| sys                |
++--------------------+
+
+# сравним содержимое таблиц `users` в БД `example` & `sample`
+viktor@viktor-VirtualBox:~$ mysql -e "SELECT * FROM example.users;"
++----+--------+
+| id | name   |
++----+--------+
+|  1 | user_1 |
+|  2 | user_2 |
+|  3 | user_3 |
+|  4 | user_4 |
++----+--------+
+viktor@viktor-VirtualBox:~$ mysql -e "SELECT * FROM sample.users;"
++----+--------+
+| id | name   |
++----+--------+
+|  1 | user_1 |
+|  2 | user_2 |
+|  3 | user_3 |
+|  4 | user_4 |
++----+--------+
+viktor@viktor-VirtualBox:~$ 
